@@ -13,18 +13,19 @@ BMC_IMG=BMC_2013-05-31.fw
 FCB_IMG=FCB_2013-05-31.fw
 BIOS_IMG=BIOS_2013-05-31.fw
 
-IPMIFLASH="./ipmiflash"
+IPMIFLASH="echo ./ipmiflash"
 FLAGS="-n"
-TFTPSVR=192.168.8.174
+#TFTPSVR=192.168.8.174
+HTTPSVR="http://10.24.2.100/poweredge_c_fw"
 BMCUSER="root"
 BMCPASS="root"
 
-for i in ${TGT_SVR_BMC}; do
+for server in ${TGT_SVR_BMC}; do
 	# BMC
-	${IPMIFLASH} ${FLAGS} -H${TGT_SVR_BMC1} -U${BMCUSER} -P${BMCPASS} bmc tftp://${TFTPSVR}/fw/${BMC_IMG}
+	${IPMIFLASH} ${FLAGS} -H${server} -U${BMCUSER} -P${BMCPASS} bmc http://${HTTPSVR}/${BMC_IMG}
 	# FCB
-	${IPMIFLASH} ${FLAGS} -H$TGT_SVR_BMC1 -U${BMCUSER} -P${BMCPASS} fcb tftp://$TFTPSVR/fw/${FCB_IMG}
+	${IPMIFLASH} ${FLAGS} -H${server} -U${BMCUSER} -P${BMCPASS} fcb http://${HTTPSVR}/${FCB_IMG}
 	# BIOS (will cause hard reboot of machine)
-	${IPMIFLASH} ${FLAGS} -H$TGT_SVR_BMC1 -U${BMCUSER} -P${BMCPASS} bios tftp://$TFTPSVR/fw/${BIOS_IMG}
+	${IPMIFLASH} ${FLAGS} -H${server} -U${BMCUSER} -P${BMCPASS} bios http://${HTTPSVR}/${BIOS_IMG}
 done
 

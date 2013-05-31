@@ -1,6 +1,6 @@
 first
 yum install -y http://poweredgec.com/files/dell-pec-ipmiflash-2013.02.11.rpm
-yum install -y ipmitool
+yum install -y ipmitool unzip curl
 
 poweredge_c_downloader.sh downloads the firmware files.
 flash.sh is not tested and not ready yet. but it should do the firmware upgrades.
